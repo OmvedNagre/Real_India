@@ -7,11 +7,11 @@ const SearchArea = () => {
     <Container>
       <FormWrapper>
         <Dropdown>
-          <option value="">Location</option>
+          <option value="Bangalore">Bangalore</option>
           <option value="Mumbai">Mumbai</option>
           <option value="Delhi">Delhi</option>
-          <option value="dwad">dwad</option>
-          <option value="awdawd">awdawd</option>
+          <option value="Hyderabad">Hyderabad</option>
+          <option value="awdawd">Chennai</option>
         </Dropdown>
         <InputField placeholder="Search" />
         <SubmitButton>Submit</SubmitButton>

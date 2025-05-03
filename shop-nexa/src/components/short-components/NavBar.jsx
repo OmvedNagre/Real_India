@@ -4,8 +4,9 @@ import styled from 'styled-components';
 export default function Navbar() {
   return (
     <Nav>
+      <div>ShopNexa</div>
       <LeftSection>
-        <div>ShopNexa</div>
+        
         <div>Home</div>
         <div>Blog</div>
         <div>About Us</div>
@@ -26,11 +27,7 @@ const Nav = styled.nav`
   padding: 1rem 2rem;
   background-color: #f8f9fa;
   border-bottom: 1px solid #ddd;
-  width:100vw;
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
+  width:97vw;
 
 `;
 
@@ -39,6 +36,13 @@ const LeftSection = styled.div`
   gap: 1.5rem;
   font-weight: bold;
   color: black;
+  bg color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  div:hover {
+    cursor: pointer;
+    color: #007bff;
+  }
 `;
 
 const RightSection = styled.div`

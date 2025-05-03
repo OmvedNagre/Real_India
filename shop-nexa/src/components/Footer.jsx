@@ -6,16 +6,13 @@ const FooterContainer = styled.div`
   border-top: 1px solid #e0e0e0;
   color: #444;
   font-size: 14px;
-  position:fixed;
-  bottom:0;
-  right:0;
-  left:0; 
+
 `;
 
 const FooterContent = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 5px 20px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 30px;
@@ -55,17 +52,15 @@ const FooterBottom = styled.div`
 const Footer = () => {
   return (
     <FooterContainer>
+
       <FooterContent>
         <Column>
-          <Heading>About Us</Heading>
+          <Heading>Quick Links</Heading>
           <LinkList>
             <LinkItem>Join Sales</LinkItem>
-            <LinkItem>Success Stories</LinkItem>
             <LinkItem>Shipping & Delivery Policy</LinkItem>
             <LinkItem>Returns & Cancellation Policy</LinkItem>
-            <LinkItem>Press Section</LinkItem>
             <LinkItem>Advertise with Us</LinkItem>
-            <LinkItem>Investor Section</LinkItem>
           </LinkList>
         </Column>
         <Column>
@@ -75,40 +70,29 @@ const Footer = () => {
             <LinkItem>Complaints</LinkItem>
             <LinkItem>Customer Care</LinkItem>
             <LinkItem>Jobs & Careers</LinkItem>
-            <LinkItem>Contact Us</LinkItem>
           </LinkList>
         </Column>
         <Column>
-          <Heading>Suppliers Tool Kit</Heading>
+          <Heading>Follow Us</Heading>
           <LinkList>
-            <LinkItem>Sell on IndiaMART</LinkItem>
-            <LinkItem>Latest BuyLead</LinkItem>
-            <LinkItem>Learning Centre</LinkItem>
-            <LinkItem>Ship With IndiaMART</LinkItem>
+            <LinkItem>Facebook</LinkItem>
+            <LinkItem>Twitter</LinkItem>
+            <LinkItem>Instagram</LinkItem>
+            <LinkItem>LinkedIn</LinkItem>
           </LinkList>
         </Column>
         <Column>
-          <Heading>Buyers Tool Kit</Heading>
+          <Heading>About Us</Heading>
           <LinkList>
-            <LinkItem>Post Your Requirement</LinkItem>
-            <LinkItem>Products You Buy</LinkItem>
-            <LinkItem>Search Products & Suppliers</LinkItem>
-          </LinkList>
-        </Column>
-        <Column>
-          <Heading>Accounting Solutions</Heading>
-          <LinkList>
-            <LinkItem>Accounting Software</LinkItem>
-            <LinkItem>Tally on Mobile</LinkItem>
-            <LinkItem>GST e-Invoice</LinkItem>
+            <LinkItem>Our Story</LinkItem>
+            <LinkItem>Privacy Policy</LinkItem>
+            <LinkItem>Terms of Service</LinkItem>
           </LinkList>
         </Column>
       </FooterContent>
+
       <FooterBottom>
-        <p>Copyright © 1996-2025 IndiaMART InterMESH Ltd. All rights reserved.</p>
-        <p>
-          <a href="#">Terms of Use</a> · <a href="#">Privacy Policy</a> · <a href="#">Link to Us</a>
-        </p>
+        <p>Copyright © 2025 ShopNexa Ltd. All rights reserved.</p>
       </FooterBottom>
     </FooterContainer>
   );
