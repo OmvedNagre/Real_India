@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import Footer from './Footer';
+import Navbar from './short-components/Navbar';
 
 const Container = styled.div`
   max-width: 600px;
@@ -52,18 +54,22 @@ const Link = styled.a`
 
 function Cart() {
   return (
-    <Container>
-      <Title>Cart</Title>
-      <Paragraph>Your cart is empty</Paragraph>
-      <Paragraph>Add items to your cart to see them here.</Paragraph>
-      <Paragraph>Continue shopping...</Paragraph>
-      <button>Continue Shopping</button>
-      <Paragraph marginTop="20px">Need help? Contact our support team.</Paragraph>
-      <button>Contact Support</button>
-      <Paragraph marginTop="20px">
-        Or visit our FAQ page for more information.
-      </Paragraph>
-    </Container>
+    <>
+      <Navbar/>
+        <Container>
+            <Title>Cart</Title>
+            <Paragraph>Your cart is empty</Paragraph>
+            <Paragraph>Add items to your cart to see them here.</Paragraph>
+            <Paragraph>Continue shopping...</Paragraph>
+            <button>Continue Shopping</button>
+            <Paragraph>
+                Need help? Contact our support team.
+                Contact Support
+                Or visit our FAQ page for more information.
+            </Paragraph>
+        </Container>
+        <Footer/>
+    </>
   );
 }
 

@@ -8,9 +8,10 @@ export default function Navbar() {
       <LeftSection>
         
         <div>Home</div>
+        <div>About</div>
+        <div>Products</div>
         <div>Blog</div>
-        <div>About Us</div>
-        <div>Contact Us</div>
+        <div>Contact</div>
       </LeftSection>
       <RightSection>
         <div>WishList</div>
