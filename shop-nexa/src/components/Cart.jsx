@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Footer from './Footer';
 import Navbar from './short-components/Navbar';
@@ -43,6 +43,27 @@ const Button = styled.button`
 `;
 
 
+const CartItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 10px 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+`;
+
+const ItemName = styled.span`
+  font-weight: 500;
+  color: #333;
+`;
+
+const ItemQuantity = styled.span`
+  color: #777;
+  font-size: 0.9rem;
+`;
+
 const Link = styled.a`
   text-decoration: underline;
   color: #007bff;
@@ -52,23 +73,47 @@ const Link = styled.a`
   }
 `;
 
-function Cart() {
+function Cart({props}) {
+  const [cartItems, setCartItems] = useState([
+    { id: 1, name: 'T-shirt', quantity: 2 },
+    { id: 2, name: 'Shoes', quantity: 1 },
+  ]);
+
+  const removeItem = (id) => {
+    setCartItems(prevItems => prevItems.filter(item => item.id !== id));
+  };
+
   return (
     <>
-      <Navbar/>
-        <Container>
-            <Title>Cart</Title>
-            <Paragraph>Your cart is empty</Paragraph>
-            <Paragraph>Add items to your cart to see them here.</Paragraph>
-            <Paragraph>Continue shopping...</Paragraph>
-            <button>Continue Shopping</button>
-            <Paragraph>
-                Need help? Contact our support team.
-                Contact Support
-                Or visit our FAQ page for more information.
-            </Paragraph>
-        </Container>
-        <Footer/>
+      <Navbar />
+      <Container>
+        <Title>Cart</Title>
+        {cartItems.length === 0 ? (
+          <>
+            <p>Your cart is empty</p>
+            <p>Add items to your cart to see them here.</p>
+            <p>Continue shopping...</p>
+            <Button>Continue Shopping</Button>
+          </>
+        ) : (
+          <>
+            {cartItems.map(item => (
+              <CartItem key={item.id}>
+                <div>
+                  <ItemName>{item.name}</ItemName>
+                  <ItemQuantity> — Qty: {item.quantity}</ItemQuantity>
+                </div>
+                <Button onClick={() => removeItem(item.id)}>Remove</Button>
+              </CartItem>
+            ))}
+            <Button>Checkout</Button>
+          </>
+        )}
+        <Paragraph>
+          Need help? <Link href="#">Contact Support</Link> or visit our <Link href="#">FAQ</Link> page.
+        </Paragraph>
+      </Container>
+      <Footer />
     </>
   );
 }

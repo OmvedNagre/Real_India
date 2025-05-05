@@ -35,6 +35,37 @@ const CategoryItem = styled.div`
   
   height: 300px;
 `;
+const CategoryGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+`;
+
+const CategoryCard = styled.div`
+  background-color: white;
+  border: 1px solid grey;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    margin: 0.5rem 0;
+    font-size: 1.5rem;
+    color: #333;
+  }
+
+  p {
+    color: #666;
+    font-size: 1rem;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+`;
 
 const CategoryImage = styled.img`
 
@@ -46,28 +77,64 @@ const CategoryImage = styled.img`
   
 `;
 
+const ExploreButton = styled.button`
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
+const ViewAllButton = styled.button`
+  margin-bottom: 1rem;
+  padding: 0.5rem 1.2rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #218838;
+  }
+`;
+
 function Category() {
   const categories = [
-    { name: 'Electronics', img: electronicImg },
-    { name: 'Clothes', img: clothesImg },
-    { name: 'Medical', img: medicalImg },
-    { name: 'EyeWear', img: eyewearImg },
-    { name: 'Shoes', img: shoesImg },
-    { name: 'Furniture', img: furnitureImg },
-    { name: 'Toys', img: toysImg },
-    { name: 'Sports', img: sportsImg },
-    { name: 'Books', img: booksImg },
-    { name: 'Accessories', img: accessoriesImg },
-    { name: 'Beauty', img: beautyImg },
-    { name: 'Gaming', img: gamingImg },
+    { id: 1, name: "Electronics", description: "Latest gadgets and devices", img: electronicImg },
+    { id: 2, name: "Fashion", description: "Trendy clothing and accessories", img: clothesImg },
+    { id: 3, name: "Home & Kitchen", description: "Essentials for your home", img: furnitureImg },
+    { id: 4, name: "Books", description: "Explore a wide range of books", img: booksImg },
+    { id: 5, name: "Sports", description: "Gear and equipment for sports", img: sportsImg },
+    { id: 6, name: "Toys", description: "Fun toys for kids of all ages", img: toysImg },
+    { id: 7, name: "Beauty", description: "Skincare and beauty products", img: beautyImg },
+    { id: 8, name: "Automotive", description: "Car accessories and tools", img: medicalImg },
+    { id: 9, name: "Health", description: "Health and wellness products", img: eyewearImg },
+    { id: 10, name: "Music", description: "Instruments and music gear", img: accessoriesImg },
+    { id: 11, name: "Gaming", description: "Consoles and gaming accessories", img: gamingImg },
+    { id: 12, name: "Travel", description: "Travel essentials and gear", img: shoesImg },
   ];
+
+  const handleExploreClick = (categoryName) => {
+    // Implement the explore click logic here
+    console.log(`Explore clicked for category: ${categoryName}`);
+    window.location.href = `/explore`;
+  };
 
   return (
     <div className="category-wrapper" style={{ padding: "20px" }}>
+      <ViewAllButton onClick={() => window.location.href = "/explore"}>View All</ViewAllButton>
       <Swiper
         modules={[Navigation]}
         navigation
-        spaceBetween={300}
+        spaceBetween={30}
         slidesPerView={4}
         breakpoints={{
           640: { slidesPerView: 2 },
@@ -75,13 +142,17 @@ function Category() {
           1024: { slidesPerView: 4 },
         }}
       >
-        {categories.map((cat, idx) => (
-          <SwiperSlide key={idx}>
-            <CategoryItem>
-              <span>{cat.name}</span>
-              <CategoryImage src={cat.img} alt={cat.name} />
-              <button>Explore</button>
-            </CategoryItem>
+        
+        {categories.map((category) => (
+          <SwiperSlide key={category.id}>
+            <CategoryCard>
+              <CategoryImage src={category.img} alt={category.name} />
+              <h2>{category.name}</h2>
+              <p>{category.description}</p>
+              {/* <ExploreButton onClick={() => handleExploreClick(category.name)}>
+                Explore
+              </ExploreButton> */}
+            </CategoryCard>
           </SwiperSlide>
         ))}
       </Swiper>
