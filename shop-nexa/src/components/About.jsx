@@ -6,7 +6,7 @@ import Navbar from './short-components/Navbar'
 const AboutContainer = styled.div`
   max-width: 900px;
   margin: 0 auto;
-  padding: 3rem 1rem;
+  padding: 3rem;
   color: #333;
 `;
 
@@ -21,7 +21,6 @@ const Section = styled.section`
 
   p {
     font-size: 1.1rem;
-    line-height: 1.6;
     color: #555;
   }
 `;

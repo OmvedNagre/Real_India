@@ -20,8 +20,6 @@ const WishList = () => {
     };
 
     const fetchRecommendations = (currentWishlist) => {
-
-        // Mock recommendations based on wishlist
         const mockRecommendations = ["Product A", "Product B", "Product C"].filter(
             (item) => !currentWishlist.includes(item)
         );

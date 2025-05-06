@@ -9,7 +9,6 @@ export default function Home() {
         <Navbar></Navbar>
         <SearchArea></SearchArea>
         <Category></Category>
-
         <Footer></Footer>
     </div>
   )

@@ -43,7 +43,6 @@ function Explore() {
   };
 
   if (selectedCategory) {
-    // Render the category page
     return (
       <CategoryContainer>
         <BackButton onClick={handleBackClick}>Back</BackButton>
@@ -56,19 +55,16 @@ function Explore() {
                     <button>❤️</button><button>Add to Cart</button>
                 </div>
             </li>
-            
-            
           ))}
-          
         </ItemList>
       </CategoryContainer>
     );
   }
 
-  // Render the explore page
   return (
     <ExploreContainer>
       <h1>Explore Categories</h1>
+      <button></button>
       <CategoryGrid>
         {categories.map((category) => (
           <CategoryCard key={category.id}>
@@ -165,13 +161,11 @@ const BackButton = styled.button`
 `;
 
 const ItemList = styled.ul`
-  list-style-type: none;
   padding: 0;
   margin-right:20px;
 
 
   li {
-
     display:flex;
     justify-content: space-between;
     background-color: #f9f9f9;
@@ -181,9 +175,6 @@ const ItemList = styled.ul`
     border-radius: 5px;
     width: 100%;
   }
-`;
-const ListGrid = styled.div`
-
 `;
 
 export default Explore;

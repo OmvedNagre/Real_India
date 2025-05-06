@@ -19,27 +19,6 @@ import accessoriesImg from "../assets/category-img/accesories.jpg";
 import beautyImg from "../assets/category-img/beauty.jpg";
 import gamingImg from "../assets/category-img/gaming.jpg";
 
-const CategoryItem = styled.div`
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
-
-  width: 350px;
-  
-  height: 300px;
-`;
-const CategoryGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-`;
 
 const CategoryCard = styled.div`
   background-color: white;
@@ -77,20 +56,6 @@ const CategoryImage = styled.img`
   
 `;
 
-const ExploreButton = styled.button`
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
-
 const ViewAllButton = styled.button`
   margin-bottom: 1rem;
   padding: 0.5rem 1.2rem;
@@ -122,11 +87,10 @@ function Category() {
     { id: 12, name: "Travel", description: "Travel essentials and gear", img: shoesImg },
   ];
 
-  const handleExploreClick = (categoryName) => {
-    // Implement the explore click logic here
-    console.log(`Explore clicked for category: ${categoryName}`);
-    window.location.href = `/explore`;
-  };
+  // const handleExploreClick = (categoryName) => {
+  //   console.log(`Explore clicked for category: ${categoryName}`);
+  //   window.location.href = `/explore`;
+  // };
 
   return (
     <div className="category-wrapper" style={{ padding: "20px" }}>

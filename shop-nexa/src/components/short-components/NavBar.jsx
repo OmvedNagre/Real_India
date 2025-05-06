@@ -25,11 +25,10 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: #f8f9fa;
+  padding: 1rem 1rem;
+  background-color: white;
   border-bottom: 1px solid #ddd;
   width:97vw;
-
 `;
 
 const LeftSection = styled.div`
@@ -38,16 +37,16 @@ const LeftSection = styled.div`
   font-weight: bold;
   color: black;
   bg color: white;
-  padding: 1rem 2rem;
+  padding: 1rem;
   border-radius: 8px;
   div:hover {
     cursor: pointer;
-    color: #007bff;
+    color: blue;
   }
 `;
 
 const RightSection = styled.div`
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   color: black;
 `;
