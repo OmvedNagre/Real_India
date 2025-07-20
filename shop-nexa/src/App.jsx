@@ -1,13 +1,10 @@
-import { useState } from 'react'
-import './App.css'
-
-import Home from'./components/Home'
-import About  from './components/About'
-import Cart from './components/Cart'
-import Contact from './components/Contact'
-import WishList from './components/WishList'
-import Explore from './components/Explore'
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import About from "./components/About";
+import Cart from "./components/Cart";
+import Contact from "./components/Contact";
+import WishList from "./components/WishList";
+import Explore from "./components/Explore";
 
 function App() {
   return (
@@ -24,4 +21,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

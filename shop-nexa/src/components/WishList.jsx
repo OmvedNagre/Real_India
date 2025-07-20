@@ -1,91 +1,89 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./short-components/Navbar";
 import Footer from "./Footer";
 
 const WishList = () => {
-    const [wishlist, setWishlist] = useState([]);
-    const [recommendations, setRecommendations] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
 
-    const addToWishlist = (product) => {
-        if (!wishlist.includes(product)) {
-            setWishlist([...wishlist, product]);
-            fetchRecommendations([...wishlist, product]);
-        }
-    };
+  // Load wishlist from localStorage when component mounts
+  useEffect(() => {
+    const storedWishlist = JSON.parse(localStorage.getItem("wishlistItems")) || [];
+    setWishlist(storedWishlist);
+  }, []);
 
-    const removeFromWishlist = (product) => {
-        const updatedWishlist = wishlist.filter((item) => item !== product);
-        setWishlist(updatedWishlist);
-        fetchRecommendations(updatedWishlist);
-    };
+  // Remove an item from wishlist and update localStorage
+  const removeFromWishlist = (productId) => {
+    const updatedWishlist = wishlist.filter((item) => item.id !== productId);
+    setWishlist(updatedWishlist);
+    localStorage.setItem("wishlistItems", JSON.stringify(updatedWishlist));
+  };
 
-    const fetchRecommendations = (currentWishlist) => {
-        const mockRecommendations = ["Product A", "Product B", "Product C"].filter(
-            (item) => !currentWishlist.includes(item)
-        );
-        setRecommendations(mockRecommendations);
-    };
+  const shareWishlist = () => {
+    const wishlistNames = wishlist.map((item) => item.title).join(", ");
+    navigator.clipboard.writeText(`Check out my wishlist: ${wishlistNames}`);
+    alert("Wishlist copied to clipboard! Share it with your friends.");
+  };
 
-    const shareWishlist = () => {
-        const wishlistString = wishlist.join(", ");
-        navigator.clipboard.writeText(`Check out my wishlist: ${wishlistString}`);
-        alert("Wishlist copied to clipboard! Share it with your friends.");
-    };
-
-    return (
-        <>
+  return (
+    <>
+      <Navbar />
+      <div style={{ padding: "2rem" }}>
+        <h1>My Wishlist</h1>
         <div>
-            <Navbar />
+          <h2>Wishlist Items</h2>
+          {wishlist.length > 0 ? (
+            <ul style={{ listStyle: "none", padding: 0 }}>
+              {wishlist.map((item) => (
+                <li key={item.id} style={{ marginBottom: "1rem", border: "1px solid #ddd", borderRadius: "8px", padding: "1rem" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                    <img src={item.image} alt={item.title} style={{ width: "60px", height: "60px", objectFit: "contain" }} />
+                    <div>
+                      <p style={{ margin: 0, fontWeight: "bold" }}>{item.title}</p>
+                      <p style={{ margin: 0, color: "#555" }}>₹{item.price}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => removeFromWishlist(item.id)}
+                    style={{
+                      marginTop: "0.5rem",
+                      backgroundColor: "#dc3545",
+                      color: "#fff",
+                      border: "none",
+                      padding: "0.5rem 1rem",
+                      borderRadius: "4px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Remove
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>Your wishlist is empty.</p>
+          )}
         </div>
-        
-        <div>
-            <h1>My Wishlist</h1>
-            <div>
-                <h2>Wishlist Items</h2>
-                {wishlist.length > 0 ? (
-                    <ul>
-                        {wishlist.map((item, index) => (
-                            <li key={index}>
-                                {item}{" "}
-                                <button onClick={() => removeFromWishlist(item)}>Remove</button>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>Your wishlist is empty.</p>
-                )}
-            </div>
 
-            <div>
-                <h2>Add a Product</h2>
-                <button onClick={() => addToWishlist("Product 1")}>Add Product 1</button>
-                <button onClick={() => addToWishlist("Product 2")}>Add Product 2</button>
-                <button onClick={() => addToWishlist("Product 3")}>Add Product 3</button>
-            </div>
-
-            <div>
-                <h2>Recommendations</h2>
-                {recommendations.length > 0 ? (
-                    <ul>
-                        {recommendations.map((item, index) => (
-                            <li key={index}>{item}</li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No recommendations available.</p>
-                )}
-            </div>
-
-            <div>
-                <h2>Share Wishlist</h2>
-                <button onClick={shareWishlist}>Share Wishlist</button>
-            </div>
+        <div style={{ marginTop: "2rem" }}>
+          <h2>Share Wishlist</h2>
+          <button
+            onClick={shareWishlist}
+            style={{
+              backgroundColor: "#007bff",
+              color: "#fff",
+              border: "none",
+              padding: "0.5rem 1rem",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
+          >
+            Share Wishlist
+          </button>
         </div>
-        <div>
-            <Footer/>
-        </div>
-        </>
-    );
+      </div>
+      <Footer />
+    </>
+  );
 };
 
 export default WishList;

@@ -11,7 +11,7 @@ const SearchArea = () => {
           <option value="Mumbai">Mumbai</option>
           <option value="Delhi">Delhi</option>
           <option value="Hyderabad">Hyderabad</option>
-          <option value="awdawd">Chennai</option>
+          <option value="Chennai">Chennai</option>
         </Dropdown>
         <InputField placeholder="Search" />
         <SubmitButton>Submit</SubmitButton>
