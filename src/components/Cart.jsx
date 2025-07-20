@@ -1,88 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import Footer from './Footer';
-import Navbar from './short-components/Navbar';
-
-const Container = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  background-color: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-`;
-
-const Title = styled.h1`
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: black;
-`;
-
-const Paragraph = styled.p`
-  margin-top: ${props => props.marginTop || '10px'};
-  color: #555;
-  font-size: 1rem;
-  line-height: 1.5;
-`;
-
-const Button = styled.button`
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  margin-top: 10px;
-
-  &:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-`;
-
-const CartItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: white;
-  padding: 15px 15px;
-  margin: 10px 0;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-`;
-
-const ItemDetails = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`;
-
-const ItemName = styled.span`
-  font-weight: 600;
-  color: #333;
-`;
-
-const ItemPrice = styled.span`
-  font-size: 0.9rem;
-  color: #666;
-`;
-
-const ItemQuantity = styled.span`
-  font-size: 0.9rem;
-  color: #666;
-`;
-
-const Link = styled.a`
-  &:hover {
-    color: #0056b3;
-  }
-`;
-
-const MainContent = styled.div`
-  flex: 1;
-`;
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import Navbar from "./short-components/Navbar";
+import Footer from "./Footer";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -90,56 +9,221 @@ const PageWrapper = styled.div`
   min-height: 100vh;
 `;
 
+const MainContent = styled.div`
+  flex: 1;
+  background: #f7f7f7;
+`;
+
+const CartContainer = styled.div`
+  max-width: 900px;
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+`;
+
+const CartHeader = styled.h1`
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  text-align: center;
+`;
+
+const SummaryBar = styled.div`
+  background: #e6f4ff;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.2rem;
+`;
+
+const ProceedButton = styled.button`
+  background: #ffb300;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #000;
+  &:hover {
+    background: #ff9900;
+  }
+`;
+
+const ItemList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
+const ItemCard = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 15px;
+`;
+
+const ItemInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex: 1;
+`;
+
+const ItemImage = styled.img`
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+`;
+
+const ItemDetails = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ItemTitle = styled.span`
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+`;
+
+const ItemPrice = styled.span`
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: 500;
+`;
+
+const QuantityControls = styled.div`
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 32px;
+`;
+
+const QtyButton = styled.button`
+  background: none;
+  border: none;
+  width: 32px;
+  height: 100%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  &:hover {
+    background: #f0f0f0;
+  }
+`;
+
+const QtyDisplay = styled.span`
+  width: 40px;
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 32px;
+`;
+
+const Actions = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
+const ActionButton = styled.button`
+  background: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  &:hover {
+    background: #e0e0e0;
+  }
+`;
+
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
 
-  // Load cart items from localStorage
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem('cartItems')) || [];
-    setCartItems(storedCart);
+    const storedCart = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const itemsWithQty = storedCart.map(item => ({ ...item, qty: item.qty || 1 }));
+    setCartItems(itemsWithQty);
   }, []);
+
+  const updateQty = (id, delta) => {
+    const updated = cartItems.map(item => {
+      if (item.id === id) {
+        const newQty = Math.max(1, item.qty + delta);
+        return { ...item, qty: newQty };
+      }
+      return item;
+    });
+    setCartItems(updated);
+    localStorage.setItem("cartItems", JSON.stringify(updated));
+  };
 
   const removeItem = (id) => {
     const updated = cartItems.filter(item => item.id !== id);
     setCartItems(updated);
-    localStorage.setItem('cartItems', JSON.stringify(updated));
+    localStorage.setItem("cartItems", JSON.stringify(updated));
   };
 
-  const totalPrice = cartItems.reduce((acc, item) => acc + item.price, 0).toFixed(2);
+  const saveForLater = (item) => {
+    // Move item back to wishlist
+    const storedWishlist = JSON.parse(localStorage.getItem("wishlistItems")) || [];
+    if (!storedWishlist.find(p => p.id === item.id)) {
+      localStorage.setItem("wishlistItems", JSON.stringify([...storedWishlist, item]));
+    }
+    removeItem(item.id);
+  };
+
+  const totalPrice = cartItems.reduce((acc, item) => acc + (item.price * item.qty), 0).toFixed(2);
 
   return (
     <PageWrapper>
       <Navbar />
       <MainContent>
-        <Container>
-          <Title>Your Cart</Title>
+        <CartContainer>
+          <CartHeader>Your Cart</CartHeader>
           {cartItems.length === 0 ? (
-            <>
-              <p>Your cart is empty</p>
-              <p>Add items to your cart to see them here.</p>
-              <Button>Continue Shopping</Button>
-            </>
+            <p style={{ textAlign: "center" }}>Your cart is empty. Add items to see them here.</p>
           ) : (
             <>
-              {cartItems.map(item => (
-                <CartItem key={item.id}>
-                  <ItemDetails>
-                    <ItemName>{item.title}</ItemName>
-                    <ItemPrice>Price: ${item.price}</ItemPrice>
-                  </ItemDetails>
-                  <Button onClick={() => removeItem(item.id)}>Remove</Button>
-                </CartItem>
-              ))}
-              <h3 style={{ marginTop: '20px' }}>Total: ${totalPrice}</h3>
-              <Button style={{ marginTop: '20px', backgroundColor: '#28a745' }}>
-                Checkout / Buy Now
-              </Button>
+              <SummaryBar>
+                <span>Subtotal ${totalPrice}</span>
+                <ProceedButton>Proceed to Buy ({cartItems.length} item{cartItems.length > 1 ? "s" : ""})</ProceedButton>
+              </SummaryBar>
+              <ItemList>
+                {cartItems.map(item => (
+                  <ItemCard key={item.id}>
+                    <ItemInfo>
+                      <input type="checkbox" />
+                      <ItemImage src={item.image} alt={item.title} />
+                      <ItemDetails>
+                        <ItemTitle>{item.title}</ItemTitle>
+                        <ItemPrice>${item.price}</ItemPrice>
+                      </ItemDetails>
+                    </ItemInfo>
+                    <QuantityControls>
+                      <QtyButton onClick={() => updateQty(item.id, -1)}>-</QtyButton>
+                      <QtyDisplay>{item.qty}</QtyDisplay>
+                      <QtyButton onClick={() => updateQty(item.id, 1)}>+</QtyButton>
+                    </QuantityControls>
+                    <Actions>
+                      <ActionButton onClick={() => removeItem(item.id)}>Delete</ActionButton>
+                      <ActionButton onClick={() => saveForLater(item)}>Save for later</ActionButton>
+                    </Actions>
+                  </ItemCard>
+                ))}
+              </ItemList>
             </>
           )}
-          <Paragraph>
-            Need help? <Link href="">Contact Support</Link> or visit our <Link href="">FAQ</Link> page.
-          </Paragraph>
-        </Container>
+        </CartContainer>
       </MainContent>
       <Footer />
     </PageWrapper>

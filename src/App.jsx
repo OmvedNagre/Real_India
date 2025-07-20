@@ -6,6 +6,7 @@ import Contact from "./components/Contact";
 import WishList from "./components/WishList";
 import Explore from "./components/Explore";
 import Products from "./components/Products";
+import Blog from "./components/Blog"; // ✅ import Blog component
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
         {/* ✅ Added dynamic route for category */}
         <Route path="/explore/:categoryName" element={<Explore />} />
         <Route path="/products" element={<Products />} />
+        {/* ✅ Added route for Blog page */}
+        <Route path="/blogs" element={<Blog />} />
       </Routes>
     </BrowserRouter>
   );

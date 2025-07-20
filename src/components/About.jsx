@@ -1,63 +1,35 @@
-import React from 'react'
-import styled from 'styled-components';
-import Footer from './Footer'
-import Navbar from './short-components/Navbar'
-
-const AboutContainer = styled.div`
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 3rem;
-  color: #333;
-`;
-
-const Section = styled.section`
-  margin-bottom: 2rem;
-
-  h2 {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-    color: #222;
-  }
-
-  p {
-    font-size: 1.1rem;
-    color: #555;
-  }
-`;
-
-const PageWrapper = styled.div`
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-`;
-
-const ContentWrapper = styled.main`
-  flex: 1;
-`;
+import React from "react";
+import Navbar from "./short-components/Navbar";
+import Footer from "./Footer";
 
 function About() {
   return (
-    <PageWrapper>
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Navbar />
-      <ContentWrapper>
-        <AboutContainer>
-          <Section>
-            <h2>Who We Are</h2>
-            <p>We are a dedicated team passionate about delivering quality and innovation in everything we do.</p>
-          </Section>
-          <Section>
-            <h2>Our Story</h2>
-            <p>Founded with a vision to revolutionize the shopping experience, ShopNexa has grown from a small idea to a thriving platform.</p>
-          </Section>
-          <Section>
-            <h2>Our Mission</h2>
-            <p>To empower customers by providing seamless, personalized, and reliable shopping solutions.</p>
-          </Section>
-        </AboutContainer>
-      </ContentWrapper>
+      <div style={{ flex: 1, padding: "2rem", maxWidth: "900px", margin: "0 auto" }}>
+        <h1 style={{ textAlign: "center", marginBottom: "1.5rem" }}>About Us</h1>
+        <p style={{ fontSize: "1.1rem", lineHeight: "1.6", marginBottom: "1rem" }}>
+          Welcome to <strong>Shop Nexa</strong>, your go-to destination for a seamless online shopping experience.
+          We bring you a curated selection of products across diverse categories, all in one place.
+        </p>
+        <p style={{ fontSize: "1.1rem", lineHeight: "1.6", marginBottom: "1rem" }}>
+          Our mission is simple: <em>to make online shopping easy, fun, and rewarding.</em> 
+          With a user-friendly interface, a point-based recommendation system, and carefully chosen categories,
+          we aim to help you find exactly what you need — and discover things you’ll love.
+        </p>
+        <p style={{ fontSize: "1.1rem", lineHeight: "1.6", marginBottom: "1rem" }}>
+          At <strong>Shop Nexa</strong>, we believe that shopping is not just about buying products, 
+          but also about exploring trends, discovering new brands, and enjoying the process. 
+          That’s why we are constantly improving our platform to serve you better.
+        </p>
+        <p style={{ fontSize: "1.1rem", lineHeight: "1.6" }}>
+          Thank you for being a part of our journey. We hope you enjoy your time here, 
+          and we’re always here to help if you have any questions or feedback.
+        </p>
+      </div>
       <Footer />
-    </PageWrapper>
+    </div>
   );
 }
 
-export default About
+export default About;
