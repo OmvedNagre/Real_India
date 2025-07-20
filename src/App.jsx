@@ -5,6 +5,7 @@ import Cart from "./components/Cart";
 import Contact from "./components/Contact";
 import WishList from "./components/WishList";
 import Explore from "./components/Explore";
+import Products from "./components/Products";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/explore" element={<Explore />} />
         {/* ✅ Added dynamic route for category */}
         <Route path="/explore/:categoryName" element={<Explore />} />
+        <Route path="/products" element={<Products />} />
       </Routes>
     </BrowserRouter>
   );

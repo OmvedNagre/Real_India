@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Footer from './Footer';
 import Navbar from './short-components/Navbar';
 
 const Container = styled.div`
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 40px 20px;
   background-color: #f9f9f9;
@@ -21,21 +21,26 @@ const Title = styled.h1`
 
 const Paragraph = styled.p`
   margin-top: ${props => props.marginTop || '10px'};
-  color: #dark gray;
+  color: #555;
   font-size: 1rem;
   line-height: 1.5;
 `;
 
 const Button = styled.button`
   padding: 10px 20px;
-  color: black;
+  background-color: #007bff;
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
   margin-top: 10px;
-`;
 
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+`;
 
 const CartItem = styled.div`
   display: flex;
@@ -48,14 +53,25 @@ const CartItem = styled.div`
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 `;
 
+const ItemDetails = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
 const ItemName = styled.span`
-  font-weight: 500;
-  color: very dark gray;
+  font-weight: 600;
+  color: #333;
+`;
+
+const ItemPrice = styled.span`
+  font-size: 0.9rem;
+  color: #666;
 `;
 
 const ItemQuantity = styled.span`
-  color: dark gray;
   font-size: 0.9rem;
+  color: #666;
 `;
 
 const Link = styled.a`
@@ -74,41 +90,50 @@ const PageWrapper = styled.div`
   min-height: 100vh;
 `;
 
-function Cart({props}) {
-  const [cartItems, setCartItems] = useState([
-    { id: 1, name: 'T-shirt', quantity: 1 },
-    { id: 2, name: 'Shoes', quantity: 1 },
-  ]);
+function Cart() {
+  const [cartItems, setCartItems] = useState([]);
+
+  // Load cart items from localStorage
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem('cartItems')) || [];
+    setCartItems(storedCart);
+  }, []);
 
   const removeItem = (id) => {
-    setCartItems(prevItems => prevItems.filter(item => item.id !== id));
+    const updated = cartItems.filter(item => item.id !== id);
+    setCartItems(updated);
+    localStorage.setItem('cartItems', JSON.stringify(updated));
   };
+
+  const totalPrice = cartItems.reduce((acc, item) => acc + item.price, 0).toFixed(2);
 
   return (
     <PageWrapper>
       <Navbar />
       <MainContent>
         <Container>
-          <Title>Cart</Title>
+          <Title>Your Cart</Title>
           {cartItems.length === 0 ? (
             <>
               <p>Your cart is empty</p>
               <p>Add items to your cart to see them here.</p>
-              <p>Continue shopping...</p>
               <Button>Continue Shopping</Button>
             </>
           ) : (
             <>
               {cartItems.map(item => (
                 <CartItem key={item.id}>
-                  <div>
-                    <ItemName>{item.name}</ItemName>
-                    <ItemQuantity> — Qty: {item.quantity}</ItemQuantity>
-                  </div>
+                  <ItemDetails>
+                    <ItemName>{item.title}</ItemName>
+                    <ItemPrice>Price: ${item.price}</ItemPrice>
+                  </ItemDetails>
                   <Button onClick={() => removeItem(item.id)}>Remove</Button>
                 </CartItem>
               ))}
-              <Button>Checkout</Button>
+              <h3 style={{ marginTop: '20px' }}>Total: ${totalPrice}</h3>
+              <Button style={{ marginTop: '20px', backgroundColor: '#28a745' }}>
+                Checkout / Buy Now
+              </Button>
             </>
           )}
           <Paragraph>

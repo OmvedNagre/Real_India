@@ -12,28 +12,31 @@ function Explore() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [categoryProducts, setCategoryProducts] = useState([]);
   const [wishlistIds, setWishlistIds] = useState([]);
+  const [cartIds, setCartIds] = useState([]); // ✅ track cart state
 
   useEffect(() => {
-    // fetch categories for grid
     fetch("https://fakestoreapi.com/products/categories")
       .then((res) => res.json())
       .then((data) => setCategories(data));
 
-    // load wishlist
-    const stored = JSON.parse(localStorage.getItem("wishlistItems")) || [];
-    setWishlistIds(stored.map((item) => item.id));
+    const storedWishlist = JSON.parse(localStorage.getItem("wishlistItems")) || [];
+    setWishlistIds(storedWishlist.map((item) => item.id));
+
+    const storedCart = JSON.parse(localStorage.getItem("cartItems")) || [];
+    setCartIds(storedCart.map((item) => item.id)); // ✅ load cart ids
   }, []);
 
   useEffect(() => {
     if (categoryName) {
-      // if categoryName present in URL, fetch its products
       fetch(`https://fakestoreapi.com/products/category/${encodeURIComponent(categoryName)}`)
         .then((res) => res.json())
         .then((products) => {
           setCategoryProducts(products);
           setSelectedCategory(categoryName);
-          const stored = JSON.parse(localStorage.getItem("wishlistItems")) || [];
-          setWishlistIds(stored.map((item) => item.id));
+          const storedWishlist = JSON.parse(localStorage.getItem("wishlistItems")) || [];
+          setWishlistIds(storedWishlist.map((item) => item.id));
+          const storedCart = JSON.parse(localStorage.getItem("cartItems")) || [];
+          setCartIds(storedCart.map((item) => item.id));
         });
     }
   }, [categoryName]);
@@ -44,28 +47,43 @@ function Explore() {
       .then((res) => res.json())
       .then((products) => {
         setCategoryProducts(products);
-        const stored = JSON.parse(localStorage.getItem("wishlistItems")) || [];
-        setWishlistIds(stored.map((item) => item.id));
+        const storedWishlist = JSON.parse(localStorage.getItem("wishlistItems")) || [];
+        setWishlistIds(storedWishlist.map((item) => item.id));
+        const storedCart = JSON.parse(localStorage.getItem("cartItems")) || [];
+        setCartIds(storedCart.map((item) => item.id));
       });
   };
 
   const handleBackClick = () => {
-    // ✅ Navigate back to home page
     navigate("/");
   };
 
   const addToWishlist = (item) => {
     const stored = JSON.parse(localStorage.getItem("wishlistItems")) || [];
-    const exists = stored.find((p) => p.id === item.id);
-    if (!exists) {
+    if (!stored.find((p) => p.id === item.id)) {
       const updated = [...stored, item];
       localStorage.setItem("wishlistItems", JSON.stringify(updated));
       setWishlistIds((prev) => [...prev, item.id]);
     }
+    const interactions = JSON.parse(localStorage.getItem("interactions")) || [];
+    interactions.push({ productId: item.id, category: item.category, type: "wishlist" });
+    localStorage.setItem("interactions", JSON.stringify(interactions));
     recordInteraction(item.id, "wishlist");
   };
 
-  // Show products if category selected either by button or by route param
+  const addToCart = (item) => {
+    const stored = JSON.parse(localStorage.getItem("cartItems")) || [];
+    if (!stored.find((p) => p.id === item.id)) {
+      const updated = [...stored, item];
+      localStorage.setItem("cartItems", JSON.stringify(updated));
+      setCartIds((prev) => [...prev, item.id]); // ✅ update cart state
+    }
+    const interactions = JSON.parse(localStorage.getItem("interactions")) || [];
+    interactions.push({ productId: item.id, category: item.category, type: "cart" });
+    localStorage.setItem("interactions", JSON.stringify(interactions));
+    recordInteraction(item.id, "cart");
+  };
+
   if (selectedCategory) {
     return (
       <>
@@ -76,12 +94,13 @@ function Explore() {
           <ResponsiveItemList>
             {categoryProducts.map((item) => {
               const inWishlist = wishlistIds.includes(item.id);
+              const inCart = cartIds.includes(item.id);
               return (
                 <li key={item.id}>
                   <ProductCard>
                     <img src={item.image} alt={item.title} />
                     <strong>{item.title}</strong>
-                    <span>₹{item.price}</span>
+                    <span>${item.price}</span>
                     <div className="actions">
                       <button
                         onClick={() => addToWishlist(item)}
@@ -90,8 +109,14 @@ function Explore() {
                       >
                         {inWishlist ? "✓ In Wishlist" : "❤️"}
                       </button>
-                      <button className="cart" onClick={() => recordInteraction(item.id, "cart")}>
-                        Add to Cart
+                      <button
+                        className={inCart ? "in-cart" : "cart"}
+                        onClick={() => {
+                          if (!inCart) addToCart(item);
+                        }}
+                        disabled={inCart}
+                      >
+                        {inCart ? "✓ In Cart" : "Add to Cart"}
                       </button>
                     </div>
                   </ProductCard>
@@ -285,6 +310,13 @@ const ProductCard = styled.div`
       &:hover {
         background-color: #0056b3;
       }
+    }
+
+    .in-cart {
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      cursor: default;
     }
   }
 

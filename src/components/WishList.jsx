@@ -39,7 +39,7 @@ const WishList = () => {
                     <img src={item.image} alt={item.title} style={{ width: "60px", height: "60px", objectFit: "contain" }} />
                     <div>
                       <p style={{ margin: 0, fontWeight: "bold" }}>{item.title}</p>
-                      <p style={{ margin: 0, color: "#555" }}>₹{item.price}</p>
+                      <p style={{ margin: 0, color: "#555" }}>${item.price}</p>
                     </div>
                   </div>
                   <button

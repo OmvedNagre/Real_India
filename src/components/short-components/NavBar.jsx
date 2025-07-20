@@ -11,6 +11,7 @@ const Navbar = () => {
       <NavItem>
         <StyledLink to="/about">About</StyledLink>
       </NavItem>
+      {/* ✅ Ensure Products link is correctly pointing */}
       <NavItem>
         <StyledLink to="/products">Products</StyledLink>
       </NavItem>
