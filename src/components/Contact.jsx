@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "./short-components/Navbar";
+import Navbar from "./short-components/NavBar";
 import Footer from "./Footer";
 
 function Contact() {

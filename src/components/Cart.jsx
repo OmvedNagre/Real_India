@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Navbar from "./short-components/Navbar";
+import Navbar from "./short-components/NavBar";
 import Footer from "./Footer";
 
 const PageWrapper = styled.div`

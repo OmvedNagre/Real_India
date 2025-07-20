@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./short-components/Navbar";
+import Navbar from "./short-components/NavBar";
 import Footer from "./Footer";
 
 const WishList = () => {
