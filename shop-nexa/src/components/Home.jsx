@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from './short-components/Navbar'
+import Navbar from './short-components/NavBar'
 import SearchArea from './SearchArea'
 import Footer from './Footer'
 import Category from './Category'

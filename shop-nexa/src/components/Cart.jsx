@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Footer from './Footer';
-import Navbar from './short-components/Navbar';
+import Navbar from './short-components/NavBar';
 
 const Container = styled.div`
   max-width: 600px;
